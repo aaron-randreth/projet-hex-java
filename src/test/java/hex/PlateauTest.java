@@ -4,8 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import main.java.hex.Pion;
-import main.java.hex.Plateau;
+import hex.Pion;
+import hex.Plateau;
+import ihm.IPlateau;
 
 class PlateauTest {
 	private String pos1 = ".X..XOXXOO.OX..."; 
@@ -25,7 +26,7 @@ class PlateauTest {
 	@Test
 	void test() {
 		final int taille = 4;
-		Plateau p = new Plateau(taille);
+		IPlateau p = new Plateau(taille);
 		assertEquals(taille, p.taille());
 		assertEquals(
 				" A B C D\n" + 
@@ -57,7 +58,7 @@ class PlateauTest {
 		for (int i = 0; i< taille; ++i)
 			assertEquals(lignes_rep[i], lignes[i]);
 		
-		Plateau p = new Plateau(taille, pos);
+		IPlateau p = new Plateau(taille, pos);
 		assertEquals(display_rep, p.toString());
 	}
 

@@ -1,4 +1,4 @@
-package main.java.hex;
+package hex;
 
 public enum Pion {
 	Croix('X'), Rond('O'), Vide('.');

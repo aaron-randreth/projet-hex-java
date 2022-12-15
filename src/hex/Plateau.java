@@ -1,6 +1,8 @@
-package main.java.hex;
+package hex;
 
-public class Plateau {
+import ihm.IPlateau;
+
+public class Plateau implements IPlateau {
 	private final static int TAILLE_MAX = 26;
 	private final static int NB_JOUEURS = 2;
 	private final static int PREMIERE_COLONNE = 'A';
@@ -16,6 +18,11 @@ public class Plateau {
 		joueur = (joueur +1) % NB_JOUEURS;
 	}
 	
+	public boolean estPlacable(String coord) {
+		return (estValide(coord) && Pion.Vide.equals(getCase(coord))); 
+	}
+	
+	@Override
 	public void jouer(String coord) {
 		assert estValide(coord);
 		assert getCase(coord) == Pion.Vide;
@@ -32,6 +39,7 @@ public class Plateau {
 		return taille;
 	}
 
+	@Override
 	public boolean estValide(String coord) {
 		if ( coord.length() !=2)
 			return false;
@@ -44,6 +52,7 @@ public class Plateau {
 		return true;
 	}
 	
+	@Override
 	public Pion getCase(String coord) {
 		assert estValide(coord);
 		int col = getColonne (coord);
@@ -88,6 +97,7 @@ public class Plateau {
 	
 	
 
+	@Override
 	public int getNb(Pion pion) {
 		int nb = 0;
 		for (Pion [] ligne : t)
@@ -97,6 +107,7 @@ public class Plateau {
 		return nb;
 	}
 
+	@Override
 	public int taille() {
 		return t.length;
 	}
