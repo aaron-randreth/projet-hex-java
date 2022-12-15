@@ -1,7 +1,7 @@
 package hex;
 
 public enum Pion {
-	Croix('X'), Rond('O'), Vide('.');
+	J1('X'), J2('O'), Vide('.');
 	private char symbole;
 	private Pion (char symbole) {
 		this.symbole = symbole;

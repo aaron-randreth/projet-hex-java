@@ -17,7 +17,6 @@ public class JoueurOrdi implements IJoueur {
 	public String getNom() {
 		return "r"+idRobot;
 		
-		
 	}
 
 	@Override
@@ -28,7 +27,7 @@ public class JoueurOrdi implements IJoueur {
 		do {
 			a1 = (int) (Math.random() * (p.taille()-1))+1;
 			a2 = (int) (Math.random() * (p.taille()-1))+1;
-			a1c = (char)(a1-'A') ;
+			a1c = (char)(a1 +'A') ;
 		}while (!p.estPlacable(""+a1c+a2));
 		p.jouer(""+a1c+a2);
 

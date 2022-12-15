@@ -38,7 +38,7 @@ class PlateauTest {
 	
 		// jouer un coup en B2
 		p.jouer("B2");
-		assertEquals(Pion.Croix, p.getCase("B2"));
+		assertEquals(Pion.J1, p.getCase("B2"));
 		System.out.println(p);
 		
 		p.jouer("C2");

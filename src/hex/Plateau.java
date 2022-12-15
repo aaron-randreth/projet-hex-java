@@ -6,7 +6,7 @@ public class Plateau implements IPlateau {
 	private final static int TAILLE_MAX = 26;
 	private final static int NB_JOUEURS = 2;
 	private final static int PREMIERE_COLONNE = 'A';
-	private final static int PREMIERE_LIGNE = '1';
+	private final static int PREMIERE_LIGNE = 1;
 	
 	// le premier joueur relie la premiere et la derniere ligne
 	// le second joueur relie la premiere et la derniere colonne
@@ -41,10 +41,11 @@ public class Plateau implements IPlateau {
 
 	@Override
 	public boolean estValide(String coord) {
-		if ( coord.length() !=2)
+		if ( coord.length() !=3 && coord.length() !=2)
 			return false;
 		int col = getColonne (coord);
 		int lig = getLigne(coord);
+		
 		if (col <0 || col >= taille())
 			return false;
 		if (lig <0 || lig >= taille())
@@ -65,7 +66,10 @@ public class Plateau implements IPlateau {
 	}
 	
 	private int getLigne(String coord) {
-		return coord.charAt(1) - PREMIERE_LIGNE; // ex '2' - '1' == 1
+		String tmp = coord.substring(1);
+		int tmp2 = Integer.valueOf(coord.substring(1)) ;
+		int tmp3 = Integer.valueOf(coord.substring(1)) - PREMIERE_LIGNE;
+		return Integer.valueOf(coord.substring(1)) - PREMIERE_LIGNE; // ex '2' - '1' == 1
 	}
 
 	public Plateau(int taille) {
@@ -88,9 +92,9 @@ public class Plateau implements IPlateau {
 				t[col][lig] = 
 				  Pion.get(lignes[lig].charAt(col));
 		
-		if (getNb(Pion.Croix) != getNb(Pion.Rond) &&
-			getNb(Pion.Croix) != (getNb(Pion.Rond)+1) &&
-					getNb(Pion.Croix) != (getNb(Pion.Rond)-1))
+		if (getNb(Pion.J1) != getNb(Pion.J2) &&
+			getNb(Pion.J1) != (getNb(Pion.J2)+1) &&
+					getNb(Pion.J1) != (getNb(Pion.J2)-1))
 			throw new IllegalArgumentException(
 					"position non valide");
 	}

@@ -17,7 +17,6 @@ public class JoueurHumain implements IJoueur {
 
 	@Override
 	public void jouer(String coord, IPlateau p) {
-		// TODO Auto-generated method stub
-
+		p.jouer(coord);
 	}
 }

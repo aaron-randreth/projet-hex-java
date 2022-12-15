@@ -10,12 +10,12 @@ class PionTest {
 
 	@Test
 	void test() {
-		assertEquals("X",Pion.Croix.toString());
-		assertEquals("O",Pion.Rond.toString());
+		assertEquals("X",Pion.J1.toString());
+		assertEquals("O",Pion.J2.toString());
 		assertEquals(".",Pion.Vide.toString());
 		
-		assertTrue(Pion.Croix == Pion.get('X'));
-		assertTrue(Pion.Rond == Pion.get('O'));
+		assertTrue(Pion.J1 == Pion.get('X'));
+		assertTrue(Pion.J2 == Pion.get('O'));
 		assertTrue(Pion.Vide == Pion.get('.'));
 		
 		assertThrows(IllegalArgumentException.class,
