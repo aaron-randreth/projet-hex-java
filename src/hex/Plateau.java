@@ -1,5 +1,8 @@
 package hex;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ihm.IPlateau;
 
 public class Plateau implements IPlateau {
@@ -41,17 +44,14 @@ public class Plateau implements IPlateau {
 
 	@Override
 	public boolean estValide(String coord) {
-		if ( coord.length() !=3 && coord.length() !=2)
-			return false;
-		int col = getColonne (coord);
-		int lig = getLigne(coord);
-		
-		if (col <0 || col >= taille())
-			return false;
-		if (lig <0 || lig >= taille())
-			return false;
-		return true;
-	}
+        if ( coord.length() !=2)
+                return false;
+        
+        int col = getColonne (coord);
+        int lig = getLigne(coord);
+        
+        return estValide(new Coordonne(col, lig));
+}
 	
 	@Override
 	public Pion getCase(String coord) {
@@ -66,9 +66,7 @@ public class Plateau implements IPlateau {
 	}
 	
 	private int getLigne(String coord) {
-		String tmp = coord.substring(1);
-		int tmp2 = Integer.valueOf(coord.substring(1)) ;
-		int tmp3 = Integer.valueOf(coord.substring(1)) - PREMIERE_LIGNE;
+		
 		return Integer.valueOf(coord.substring(1)) - PREMIERE_LIGNE; // ex '2' - '1' == 1
 	}
 
@@ -147,9 +145,92 @@ public class Plateau implements IPlateau {
 		return lignes;
 		
 	}
+	
+	
+
+	public boolean estValide(Coordonne coord) {
+        if (coord.getColonne() <0 || coord.getColonne() >= taille())
+                return false;
+        if (coord.getLigne()  < 0 || coord.getLigne() >= taille())
+                return false;
+        return true;
+	}
+	
+	public Pion getCase(Coordonne c) {
+		  assert estValide(c);
+		  return t[c.getColonne()][c.getLigne()];
+	}
+	
+	public boolean aGagne(Pion pi) {
+		List<Coordonne> phaut = new ArrayList<>();
+		List<Coordonne> pbas = new ArrayList<>();
+		List<Coordonne> visitee = new ArrayList<>();
+		
+		for(int i=0;i<taille()-1;i++) {
+			if(pi == getCase(new Coordonne(i,0))) 
+				phaut.add(new Coordonne(i,0));
+			
+			if(pi == getCase(new Coordonne(i,taille()-1)))
+				pbas.add(new Coordonne(i,0));
+		}
+		
+		if(phaut.size()==0 || pbas.size()==0)
+			return false;
+		
+		/*for(int i=0;i<phaut.size();i++) {
+			visitee.add(phaut.get(i));
+			Coordonne actuel=phaut.get(i);
+			for(int j=0;j<actuel.voisinOccup(this).size()-1;j++){
+				if (actuel == 
+			}
+		}*/
+		
+	
+	}
+	
 
 
+}
 
-
+class Coordonne{
+	private int ligne;
+	private int colonne;
+	
+	public Coordonne(int l,int c) {
+		ligne = l;
+		colonne=c;
+	}
+	
+	public int getLigne() {
+		return ligne;
+	} 
+	
+	public int getColonne() {
+		return colonne;
+	}
+	
+	public List<Coordonne> voisinOccup(Plateau p) {
+		List<Coordonne> voisins = new ArrayList<>();
+		
+		voisins.add(coord_decale(-1,0));
+		voisins.add(coord_decale(-1,1));
+		voisins.add(coord_decale(0,-1));
+		voisins.add(coord_decale(0,1));
+		voisins.add(coord_decale(1,-1));
+		voisins.add(coord_decale(1,0));
+		
+		for(int i=0;i<voisins.size();i++) {
+			if(!p.estValide(voisins.get(i))) {
+				voisins.remove(i);
+				i--;
+			}
+		}
+		
+		return voisins;
+	}
+	
+	private Coordonne coord_decale(int decalage_x, int decalage_y){
+		  return new Coordonne(ligne-decalage_x, colonne-decalage_y);
+	}
 
 }
