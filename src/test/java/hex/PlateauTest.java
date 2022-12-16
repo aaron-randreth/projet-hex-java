@@ -23,7 +23,8 @@ class PlateauTest {
 			"3   O O . O\n" + 
 			"4    X . . .\n";
 
-	@Test
+
+	
 	void test() {
 		final int taille = 4;
 		IPlateau p = new Plateau(taille);
@@ -45,7 +46,6 @@ class PlateauTest {
 		System.out.println(p);
 	}
 	
-	@Test
 	public void testerPositions() {
 		testerPosition(pos1, lignes1_rep, display1_rep);
 	}
@@ -60,6 +60,39 @@ class PlateauTest {
 		
 		IPlateau p = new Plateau(taille, pos);
 		assertEquals(display_rep, p.toString());
+	}
+	
+	private String vert_win1_in = ".X..XOXXXOOOXOO.";
+	private String vert_win1_tostr =
+			" A B C D\n" + 
+			"1 . X . .\n" + 
+			"2  X O X X\n" + 
+			"3   X O O O\n" + 
+			"4    X O O .\n";
+	
+	private String vert_win2_tostr =
+			" A B C D\n" + 
+			"1 . X . .\n" + 
+			"2  X O X X\n" + 
+			"3   X O X O\n" + 
+			"4    X O O O\n";
+	private String vert_win2_in = vert_win2_tostr.replaceAll("[1-9A-D \n]", "") ;
+	
+	@Test
+	public void testWins() {
+		IPlateau p1 = new Plateau(4, vert_win1_in);
+		assertEquals(p1.toString(), vert_win1_tostr);
+		/*
+		assert(p1.aGagne(Pion.J1));
+		assertFalse(p1.aGagne(Pion.J2));
+		
+		IPlateau p2 = new Plateau(4, pos1);
+		assertFalse(p2.aGagne(Pion.J1));
+		assertFalse(p2.aGagne(Pion.J2));*/
+		
+		IPlateau p3 = new Plateau(4, vert_win2_in);
+		assert(p3.aGagne(Pion.J1));
+
 	}
 
 }

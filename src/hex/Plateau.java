@@ -15,7 +15,7 @@ public class Plateau implements IPlateau {
 	// le second joueur relie la premiere et la derniere colonne
 	
 	private Pion[][] t;
-	private int joueur = 0; // prochain à jouer
+	private int joueur = 0; // prochain ï¿½ jouer
 	
 	private void suivant() {
 		joueur = (joueur +1) % NB_JOUEURS;
@@ -161,30 +161,48 @@ public class Plateau implements IPlateau {
 		  return t[c.getColonne()][c.getLigne()];
 	}
 	
+	public boolean visit(Coordonne c, List<Coordonne> visitees, List<Coordonne> pions_fin, Pion p) {
+		if (pions_fin.contains(c))
+			return true;
+		
+		boolean has_won = false;
+		
+		for (Coordonne voisin : c.voisinOccupe(this, p)) {
+			if (visitees.contains(voisin))
+				continue;
+			
+			visitees.add(voisin);
+			has_won = has_won || visit(voisin, visitees, pions_fin, p);
+		}
+		
+		
+		return has_won;
+	}
+	
 	public boolean aGagne(Pion pi) {
 		List<Coordonne> phaut = new ArrayList<>();
 		List<Coordonne> pbas = new ArrayList<>();
-		List<Coordonne> visitee = new ArrayList<>();
+		List<Coordonne> visitees = new ArrayList<>();
 		
-		for(int i=0;i<taille()-1;i++) {
-			if(pi == getCase(new Coordonne(i,0))) 
-				phaut.add(new Coordonne(i,0));
+		for(int i=0 ; i < taille(); i++) {
+			Coordonne haut = new Coordonne(i,0);
+			if(pi == getCase(haut)) 
+				phaut.add(haut);
 			
-			if(pi == getCase(new Coordonne(i,taille()-1)))
-				pbas.add(new Coordonne(i,0));
+			Coordonne bas = new Coordonne(i,taille()-1);
+			if(pi == getCase(bas))
+				pbas.add(bas);
 		}
 		
-		if(phaut.size()==0 || pbas.size()==0)
+		if(phaut.size() == 0 || pbas.size() == 0)
 			return false;
 		
-		/*for(int i=0;i<phaut.size();i++) {
-			visitee.add(phaut.get(i));
-			Coordonne actuel=phaut.get(i);
-			for(int j=0;j<actuel.voisinOccup(this).size()-1;j++){
-				if (actuel == 
-			}
-		}*/
+		for (Coordonne c : phaut) {
+			if (visit(c, visitees, pbas, pi))
+				return true;
+		}
 		
+		return false;
 	
 	}
 	
@@ -196,9 +214,9 @@ class Coordonne{
 	private int ligne;
 	private int colonne;
 	
-	public Coordonne(int l,int c) {
-		ligne = l;
+	public Coordonne(int c,int l) {
 		colonne=c;
+		ligne = l;
 	}
 	
 	public int getLigne() {
@@ -209,18 +227,18 @@ class Coordonne{
 		return colonne;
 	}
 	
-	public List<Coordonne> voisinOccup(Plateau p) {
+	public List<Coordonne> voisinOccupe(Plateau p, Pion pion) {
 		List<Coordonne> voisins = new ArrayList<>();
 		
-		voisins.add(coord_decale(-1,0));
-		voisins.add(coord_decale(-1,1));
-		voisins.add(coord_decale(0,-1));
-		voisins.add(coord_decale(0,1));
-		voisins.add(coord_decale(1,-1));
-		voisins.add(coord_decale(1,0));
+		voisins.add(coord_decale(-1, 0));
+		voisins.add(coord_decale(-1, 1));
+		voisins.add(coord_decale( 0,-1));
+		voisins.add(coord_decale( 0, 1));
+		voisins.add(coord_decale( 1,-1));
+		voisins.add(coord_decale( 1, 0));
 		
-		for(int i=0;i<voisins.size();i++) {
-			if(!p.estValide(voisins.get(i))) {
+		for(int i=0; i<voisins.size() ;i++) {
+			if( !(p.estValide(voisins.get(i)) && pion.equals(p.getCase(voisins.get(i)))) ) {
 				voisins.remove(i);
 				i--;
 			}
@@ -231,6 +249,19 @@ class Coordonne{
 	
 	private Coordonne coord_decale(int decalage_x, int decalage_y){
 		  return new Coordonne(ligne-decalage_x, colonne-decalage_y);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Coordonne))
+			return false;
+		
+		if (obj == this)
+			return true;
+		
+		Coordonne c = (Coordonne) obj;
+		
+		return c.colonne == colonne && c.ligne == ligne;
 	}
 
 }

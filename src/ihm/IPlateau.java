@@ -18,5 +18,7 @@ public interface IPlateau {
 	String toString();
 	
 	boolean estPlacable(String coord);
+	
+	boolean aGagne(Pion p);
 
 }
