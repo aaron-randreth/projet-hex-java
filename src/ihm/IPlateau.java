@@ -14,11 +14,11 @@ public interface IPlateau {
 	int getNb(Pion pion);
 
 	int taille();
-
-	String toString();
 	
 	boolean estPlacable(String coord);
 	
 	boolean aGagne(Pion p);
+
+	boolean peutJouer();
 
 }

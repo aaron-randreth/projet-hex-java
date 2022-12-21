@@ -19,4 +19,5 @@ public class JoueurHumain implements IJoueur {
 	public void jouer(String coord, IPlateau p) {
 		p.jouer(coord);
 	}
+
 }

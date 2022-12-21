@@ -8,7 +8,7 @@ import ihm.IPlateau;
 public class Plateau implements IPlateau {
 	private final static int TAILLE_MAX = 26;
 	private final static int NB_JOUEURS = 2;
-	private final static int PREMIERE_COLONNE = 'A';
+	final static int PREMIERE_COLONNE = 'A';
 	private final static int PREMIERE_LIGNE = 1;
 	
 	// le premier joueur relie la premiere et la derniere ligne
@@ -16,6 +16,35 @@ public class Plateau implements IPlateau {
 	
 	private Pion[][] t;
 	private int joueur = 0; // prochain � jouer
+	
+	public Plateau(int taille) {
+		assert taille > 0 && taille <= TAILLE_MAX;
+		t = new Pion [taille][taille];
+		
+		for (int lig = 0; lig < taille(); ++lig)
+			for (int col = 0; col < taille(); ++col)
+				t[col][lig] = Pion.Vide;
+	}
+	
+	public Plateau(int taille, String pos) {
+		assert taille > 0 && taille <= TAILLE_MAX;
+		t = new Pion [taille][taille];
+		
+		String[] lignes = decouper(pos);
+		
+		
+		for (int lig = 0; lig < taille(); ++lig)
+			for (int col = 0; col < taille(); ++col)
+				t[col][lig] = 
+				  Pion.get(lignes[lig].charAt(col));
+		
+		if (getNb(Pion.J1) != getNb(Pion.J2) &&
+			getNb(Pion.J1) != (getNb(Pion.J2)+1) &&
+					getNb(Pion.J1) != (getNb(Pion.J2)-1))
+			throw new IllegalArgumentException(
+					"position non valide ! ");
+	}
+	
 	
 	private void suivant() {
 		joueur = (joueur +1) % NB_JOUEURS;
@@ -36,6 +65,11 @@ public class Plateau implements IPlateau {
 		suivant();
 	}
 	
+	@Override
+	public boolean peutJouer() {
+		return getNb(Pion.Vide) == 0;
+	}
+
 	public static int getTaille(String pos) {
 		int taille = (int) Math.sqrt(pos.length());
 		assert taille * taille == pos.length();
@@ -44,7 +78,7 @@ public class Plateau implements IPlateau {
 
 	@Override
 	public boolean estValide(String coord) {
-        if ( coord.length() !=2)
+        if ( coord.length() < 2)
                 return false;
         
         int col = getColonne (coord);
@@ -69,36 +103,7 @@ public class Plateau implements IPlateau {
 		
 		return Integer.valueOf(coord.substring(1)) - PREMIERE_LIGNE; // ex '2' - '1' == 1
 	}
-
-	public Plateau(int taille) {
-		assert taille > 0 && taille <= TAILLE_MAX;
-		t = new Pion [taille][taille];
-		
-		for (int lig = 0; lig < taille(); ++lig)
-			for (int col = 0; col < taille(); ++col)
-				t[col][lig] = Pion.Vide;
-	}
 	
-	public Plateau(int taille, String pos) {
-		assert taille > 0 && taille <= TAILLE_MAX;
-		t = new Pion [taille][taille];
-		
-		String[] lignes = decouper(pos);
-		
-		for (int lig = 0; lig < taille(); ++lig)
-			for (int col = 0; col < taille(); ++col)
-				t[col][lig] = 
-				  Pion.get(lignes[lig].charAt(col));
-		
-		if (getNb(Pion.J1) != getNb(Pion.J2) &&
-			getNb(Pion.J1) != (getNb(Pion.J2)+1) &&
-					getNb(Pion.J1) != (getNb(Pion.J2)-1))
-			throw new IllegalArgumentException(
-					"position non valide");
-	}
-	
-	
-
 	@Override
 	public int getNb(Pion pion) {
 		int nb = 0;
@@ -172,37 +177,62 @@ public class Plateau implements IPlateau {
 				continue;
 			
 			visitees.add(voisin);
+			System.out.println(visitees);
 			has_won = has_won || visit(voisin, visitees, pions_fin, p);
 		}
-		
-		
 		return has_won;
 	}
 	
 	public boolean aGagne(Pion pi) {
-		List<Coordonne> phaut = new ArrayList<>();
-		List<Coordonne> pbas = new ArrayList<>();
-		List<Coordonne> visitees = new ArrayList<>();
-		
-		for(int i=0 ; i < taille(); i++) {
-			Coordonne haut = new Coordonne(i,0);
-			if(pi == getCase(haut)) 
-				phaut.add(haut);
+		if(pi == Pion.J1) {
+			List<Coordonne> phaut = new ArrayList<>();
+			List<Coordonne> pbas = new ArrayList<>();
+			List<Coordonne> visitees = new ArrayList<>();
 			
-			Coordonne bas = new Coordonne(i,taille()-1);
-			if(pi == getCase(bas))
-				pbas.add(bas);
+			for(int i=0 ; i < taille(); i++) {
+				Coordonne haut = new Coordonne(i,0);
+				if(pi == getCase(haut)) 
+					phaut.add(haut);
+				
+				Coordonne bas = new Coordonne(i,taille()-1);
+				if(pi == getCase(bas))
+					pbas.add(bas);
+			}
+			
+			if(phaut.size() == 0 || pbas.size() == 0)
+				return false;
+			
+			for (Coordonne c : phaut) {
+				if (visit(c, visitees, pbas, pi))
+					return true;
+			}
+			
+		}else {
+			List<Coordonne> pgauche = new ArrayList<>();
+			List<Coordonne> pdroit = new ArrayList<>();
+			List<Coordonne> visitees = new ArrayList<>();
+			
+			for(int i=0 ; i < taille(); i++) {
+				Coordonne gauche = new Coordonne(0,i);
+				if(pi == getCase(gauche)) 
+					pgauche.add(gauche);
+				
+				Coordonne droit = new Coordonne(taille()-1,i);
+				if(pi == getCase(droit))
+					pdroit.add(droit);
+			}
+			
+			if(pgauche.size() == 0 || pdroit.size() == 0)
+				return false;
+			
+			for (Coordonne c : pgauche) {
+				if (visit(c, visitees, pdroit, pi))
+					return true;
+			}
 		}
-		
-		if(phaut.size() == 0 || pbas.size() == 0)
-			return false;
-		
-		for (Coordonne c : phaut) {
-			if (visit(c, visitees, pbas, pi))
-				return true;
-		}
-		
 		return false;
+		
+		
 	
 	}
 	
@@ -263,5 +293,7 @@ class Coordonne{
 		
 		return c.colonne == colonne && c.ligne == ligne;
 	}
-
+	public String toString() {
+		return "(" + (ligne + 1) + "," + (char)(colonne + Plateau.PREMIERE_COLONNE) + ")";
+	}
 }
