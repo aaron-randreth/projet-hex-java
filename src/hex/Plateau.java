@@ -221,7 +221,7 @@ public class Plateau implements IPlateau {
 				if(pi == getCase(droit))
 					pdroit.add(droit);
 			}
-			
+		
 			if(pgauche.size() == 0 || pdroit.size() == 0)
 				return false;
 			

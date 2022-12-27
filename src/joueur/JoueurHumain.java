@@ -12,12 +12,13 @@ public class JoueurHumain implements IJoueur {
 
 	@Override
 	public String getNom() {
-		return this.nom;
+		return this.nom.toUpperCase();
 	}
 
 	@Override
 	public void jouer(String coord, IPlateau p) {
 		p.jouer(coord);
 	}
+
 
 }

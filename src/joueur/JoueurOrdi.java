@@ -15,7 +15,7 @@ public class JoueurOrdi implements IJoueur {
 
 	@Override
 	public String getNom() {
-		return "r"+idRobot;
+		return "R"+idRobot;
 		
 	}
 
@@ -29,6 +29,7 @@ public class JoueurOrdi implements IJoueur {
 			a2 = (int) (Math.random() * (p.taille()-1))+1;
 			a1c = (char)(a1 +'A') ;
 		}while (!p.estPlacable(""+a1c+a2));
+		System.out.println(getNom() + " a place son pion a la position " + a1c+a2 );
 		p.jouer(""+a1c+a2);
 
 	}

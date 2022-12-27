@@ -62,20 +62,20 @@ class PlateauTest {
 		assertEquals(display_rep, p.toString());
 	}
 	
-	private String vert_win1_in = ".X..OOXXXOOO....";
+	private String vert_win1_in = ".X.XOOXX.OOOX...";
 	private String vert_win1_tostr =
 			" A B C D\n" + 
-			"1 . X . .\n" + 
+			"1 . X . X\n" + 
 			"2  O O X X\n" + 
-			"3   X O O O\n" + 
-			"4    . . . .\n";
+			"3   . O O O\n" + 
+			"4    X . . .\n";
 	
 	private String vert_win2_tostr =
 			" A B C D\n" + 
-			"1 . . . X\n" + 
-			"2  . O . .\n" + 
-			"3   . . X O\n" + 
-			"4    X . O .\n";
+			"1 X . . X\n" + 
+			"2  O O X .\n" + 
+			"3   X O X O\n" + 
+			"4    X O O .\n";
 	private String vert_win2_in = vert_win2_tostr.replaceAll("[1-9A-D \n]", "") ;
 	
 	@Test
@@ -87,13 +87,12 @@ class PlateauTest {
 		assertTrue(p1.aGagne(Pion.J2));
 		
 		IPlateau p2 = new Plateau(4, pos1);
-		System.out.println(p2);
 		assertFalse(p2.aGagne(Pion.J1));
 		assertFalse(p2.aGagne(Pion.J2));
 		
 		IPlateau p3 = new Plateau(4, vert_win2_in);
 		System.out.println(p3);
-		assertTrue(p3.aGagne(Pion.J1));
+		assert(p3.aGagne(Pion.J1));
 		assertFalse(p3.aGagne(Pion.J2));
 
 	}
