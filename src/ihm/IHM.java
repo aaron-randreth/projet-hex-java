@@ -62,6 +62,8 @@ public class IHM {
 				System.out.println("Vous avez place votre pion a la position " + coord);
 				System.out.println(plateau);
 				
+				if(plateau.aGagne(Pion.J1)) break;
+				
 				if (j2.getClass().getName().equals("joueur.JoueurHumain")) {
 					System.out.println(j2.getNom() + " , Saissisez votre mouvement sur le plateau");
 					coord = IHM.saisirCoord(sc, taille);;
