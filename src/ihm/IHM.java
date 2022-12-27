@@ -1,10 +1,12 @@
 package ihm;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Scanner;
+
+import hex.FabriquePlateau;
 import hex.Pion;
-import hex.Plateau;
 import joueur.FabriqueJoueur;
 
 public class IHM {
@@ -13,7 +15,7 @@ public class IHM {
 		boolean rejouer = true;
 		Scanner sc = new Scanner(System.in);
 		while(rejouer){
-			Plateau plateau = null;
+			IPlateau plateau = null;
 			IJoueur j1 = null;
 			IJoueur j2 = null;
 			
@@ -48,7 +50,7 @@ public class IHM {
 				taille = sc.nextInt();
 			}while((3 > taille || 26 < taille) && !sc.hasNextInt());
 			
-			plateau = new Plateau(taille);
+			plateau = FabriquePlateau.creer(taille,null);
 			
 			System.out.println("Vos pions sont les croix et les ronds pour l'autre joueur.");
 			System.out.println(plateau);
