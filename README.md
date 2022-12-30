@@ -13,7 +13,7 @@ Contenu du projet (dossier src ) :
 Bilan du projet :
 
 Dans l'ensemble tout marche dans le projet, on a reussi à accomplir les objectifs attendu. 
-Ce qui est à ameliorer ce serait d'avoir la possibilité à ce que on puisse faire une partie ordinateur contre ordinateur.
+Ce qui est à ameliorer ce serait d'avoir la possibilité à ce qu'on puisse faire une partie ordinateur contre ordinateur.
 
 Les Tests :
 
