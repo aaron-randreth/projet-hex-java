@@ -1,6 +1,6 @@
 # projet hex
 Membres :
-Yousrah Soule, Aaron, Llo, Adrien
+Yousrah Soule, Aaron Randreth, Llo, Adrien Deu
 Groupe : 203
 
 Contenu du projet (dossier src ) :
