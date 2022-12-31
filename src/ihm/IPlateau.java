@@ -5,7 +5,6 @@ public interface IPlateau {
 	void jouer(String coord);
 
 	boolean estValide(String coord);
-	
 
 	Pion getCase(String coord);
 

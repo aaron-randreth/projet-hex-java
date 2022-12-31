@@ -52,13 +52,17 @@ public class Plateau implements IPlateau {
 	}
 	
 	public boolean estPlacable(String coord) {
-		return (estValide(coord) && Pion.Vide.equals(getCase(coord))); 
+		return (estValide(coord) && Pion.Vide == getCase(coord)); 
 	}
 	
 	@Override
-	public void jouer(String coord) {
+	public void jouer(String coord){
 		assert estValide(coord);
-		assert getCase(coord) == Pion.Vide;
+		assert(getCase(coord) == Pion.Vide);
+		
+		if (!estPlacable(coord))
+			throw new IllegalArgumentException("position non valide ! ");
+
 		Pion pion = Pion.values()[joueur];
 		int col = getColonne (coord);
 		int lig = getLigne(coord);
@@ -91,7 +95,7 @@ public class Plateau implements IPlateau {
 	@Override
 	public Pion getCase(String coord) {
 		assert estValide(coord);
-		int col = getColonne (coord);
+		int col = getColonne(coord);
 		int lig = getLigne(coord);
 		return t[col][lig];
 	}
@@ -184,60 +188,30 @@ public class Plateau implements IPlateau {
 	}
 	
 	public boolean aGagne(Pion pi) {
-		if(pi == Pion.J1) {
-			List<Coordonne> phaut = new ArrayList<>();
-			List<Coordonne> pbas = new ArrayList<>();
-			List<Coordonne> visitees = new ArrayList<>();
-			
-			for(int i=0 ; i < taille(); i++) {
-				Coordonne haut = new Coordonne(i,0);
-				if(pi == getCase(haut)) 
-					phaut.add(haut);
-				
-				Coordonne bas = new Coordonne(i,taille()-1);
-				if(pi == getCase(bas))
-					pbas.add(bas);
-				
-			}
-			
-			if(phaut.size() == 0 || pbas.size() == 0)
-				return false;
-			
-			for (Coordonne c : phaut) {
-				if (visit(c, visitees, pbas, pi))
-					return true;
-			}
-			
-		}else {
-			List<Coordonne> pgauche = new ArrayList<>();
-			List<Coordonne> pdroit = new ArrayList<>();
-			List<Coordonne> visitees = new ArrayList<>();
-			
-			for(int i=0 ; i < taille(); i++) {
-				Coordonne gauche = new Coordonne(0,i);
-				if(pi == getCase(gauche)) 
-					pgauche.add(gauche);
-				
-				Coordonne droit = new Coordonne(taille()-1,i);
-				if(pi == getCase(droit))
-					pdroit.add(droit);
-			}
+		List<Coordonne> pions_depart_ocupe = new ArrayList<>();
+		List<Coordonne> pions_arrive_ocupe = new ArrayList<>();
+		List<Coordonne> visitees = new ArrayList<>();
 		
-			if(pgauche.size() == 0 || pdroit.size() == 0)
-				return false;
+		for(int i=0 ; i < taille(); i++) {
+			Coordonne depart = (pi == Pion.J1)?new Coordonne(i,0): new Coordonne(0, i);
+			if(pi == getCase(depart)) 
+				pions_depart_ocupe.add(depart);
 			
-			for (Coordonne c : pgauche) {
-				if (visit(c, visitees, pdroit, pi))
-					return true;
-			}
+			Coordonne arrive = (pi == Pion.J1)?new Coordonne(i,taille()-1):new Coordonne(taille()-1,i);
+			if(pi == getCase(arrive))
+				pions_arrive_ocupe.add(arrive);
+			
 		}
-		return false;
 		
+		if(pions_depart_ocupe.size() == 0 || pions_arrive_ocupe.size() == 0)
+			return false;
 		
-	
-	}
-	
+		for (Coordonne c : pions_depart_ocupe)
+			if (visit(c, visitees, pions_arrive_ocupe, pi))
+				return true;
 
+		return false;
+	}
 
 }
 
@@ -245,7 +219,7 @@ class Coordonne{
 	private int ligne;
 	private int colonne;
 	
-	public Coordonne(int c,int l) {
+	public Coordonne(int c, int l) {
 		colonne=c;
 		ligne = l;
 	}
@@ -260,6 +234,7 @@ class Coordonne{
 	
 	public List<Coordonne> voisinOccupe(Plateau p, Pion pion) {
 		List<Coordonne> voisins = new ArrayList<>();
+		List<Coordonne> voisins_ocupe = new ArrayList<>();
 		
 		voisins.add(coord_decale(-1, 0));
 		voisins.add(coord_decale(-1, 1));
@@ -268,18 +243,17 @@ class Coordonne{
 		voisins.add(coord_decale( 1,-1));
 		voisins.add(coord_decale( 1, 0));
 		
-		for(int i=0; i<voisins.size() ;i++) {
-			if( !(p.estValide(voisins.get(i)) && pion.equals(p.getCase(voisins.get(i)))) ) {
-				voisins.remove(i);
-				i--;
+		for(Coordonne v : voisins) {
+			if(p.estValide(v) && pion == p.getCase(v)) {
+				voisins_ocupe.add(v);
 			}
 		}
 		
-		return voisins;
+		return voisins_ocupe;
 	}
 	
-	private Coordonne coord_decale(int decalage_x, int decalage_y){
-		  return new Coordonne(ligne-decalage_x, colonne-decalage_y);
+	private Coordonne coord_decale(int decalage_col, int decalage_li){
+		  return new Coordonne(colonne+decalage_col, ligne+decalage_li);
 	}
 	
 	@Override

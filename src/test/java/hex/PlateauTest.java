@@ -79,6 +79,12 @@ class PlateauTest {
 	private String vert_win2_in = vert_win2_tostr.replaceAll("[1-9A-D \n]", "") ;
 	
 	@Test
+	public void tt() {
+		Plateau p = new Plateau(4);
+		
+	}
+	
+	
 	public void testWins() {
 		IPlateau p1 = new Plateau(4, vert_win1_in);
 		assertEquals(p1.toString(), vert_win1_tostr);

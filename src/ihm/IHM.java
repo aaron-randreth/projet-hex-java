@@ -14,9 +14,8 @@ public class IHM {
 		boolean rejouer = true;
 		Scanner sc = new Scanner(System.in);
 		while(rejouer){
-			IPlateau plateau = null;
-			IJoueur j1 = null;
-			IJoueur j2 = null;
+			IPlateau plateau;
+			IJoueur j1, j2;
 			
 			System.out.println("Voulez vous jouer contre un autre joueur ou seul (face a l'ordinateur) ?");
 			
@@ -24,7 +23,6 @@ public class IHM {
 			 do{
 				System.out.print("Saisissez 'joueur' ou 'seul' : ");
 				reponse = sc.next();
-				System.out.println(reponse.equals("seul"));
 			} while (!reponse.equals("joueur") && !reponse.equals("seul"));
 			 
 			System.out.print("Saisissez votre pseudo  : ");
@@ -40,13 +38,18 @@ public class IHM {
 			case "seul":
 				j2 = FabriqueJoueur.creer();
 				System.out.println("Vous jouer contre " + j2.getNom());
+				break;
+			default:
+				j2 = FabriqueJoueur.creer();
+				System.out.println("Vous jouer contre " + j2.getNom());
+				break;
 			}
 			
 			int taille;
 			do{
 				System.out.print("Saisissez une taille pour le plateau entre 3 et 26 inclus :");
 				taille = sc.nextInt();
-			}while((3 > taille || 26 < taille) && !sc.hasNextInt());
+			}while(taille < 3 || 26 < taille);
 			
 			plateau = FabriquePlateau.creer(taille);
 			
@@ -67,7 +70,7 @@ public class IHM {
 				
 				System.out.println(plateau);
 				
-			}while(!plateau.aGagne(Pion.J1) || !plateau.aGagne(Pion.J2));
+			}while(!plateau.aGagne(Pion.J1) && !plateau.aGagne(Pion.J2));
 			
 			
 			String nom_gagant = (plateau.aGagne(Pion.J1))?j1.getNom(): j2.getNom();
@@ -111,24 +114,23 @@ public class IHM {
 	private static String saisirCoord(String player_name, Scanner sc, int taille) {
 		System.out.println(player_name + " , Saissisez votre mouvement sur le plateau");
 		
-		List<String> l = new ArrayList<>();
-		for (int i = 0; i < taille; i++) {
-			l.add((char)(i + 'A')+"");
-		}
+		String msg = "Saissisez la colonne entre A et " + (char)(taille -1 + 'A') + " puis la ligne sous le format 'A1' : ";
+		String coord;
 		
-		String col_msg = "Saissisez la colonne entre A et " + (char)(taille -1 + 'A') + " : ";
-		String col;
+		char col = '@';
+		int li = -1;
+		
 		do{
-			System.out.print(col_msg);
-			col = sc.next();
-		}while (!l.contains(col) && !sc.hasNext());
+			System.out.print(msg);
+			coord = sc.next();
+			
+			col = coord.charAt(0);
+			li =  Integer.parseInt(coord.substring(1));
+		} while (!(2 <= coord.length() && coord.length() <= 26) &&
+				!('A' < col && col <= 'A' + taille) &&
+				!(1 <= li && li <= taille ));
+
 		
-		int lig; 
-		do{
-			System.out.print("Saissisez la ligne : ");
-			lig = sc.nextInt();
-		}while ((1 > lig || lig > taille) && !sc.hasNextInt());
-		
-		return col +""+ lig;
+		return coord;
 	}
 }
