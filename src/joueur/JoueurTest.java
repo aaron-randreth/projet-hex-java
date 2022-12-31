@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import hex.Pion;
 import hex.Plateau;
 import ihm.IJoueur;
 import ihm.IPlateau;
+import ihm.Pion;
 
 
 

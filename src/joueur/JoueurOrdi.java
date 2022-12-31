@@ -33,6 +33,11 @@ public class JoueurOrdi implements IJoueur {
 		p.jouer(""+a1c+a2);
 
 	}
+	
+	@Override
+	public boolean needs_input() {
+		return false;
+	}
 
 
 }

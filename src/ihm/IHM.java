@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import hex.FabriquePlateau;
-import hex.Pion;
 import joueur.FabriqueJoueur;
 
 public class IHM {
@@ -25,23 +24,22 @@ public class IHM {
 			 do{
 				System.out.print("Saisissez 'joueur' ou 'seul' : ");
 				reponse = sc.next();
-			}while ((!reponse.equals("joueur") || !reponse.equals("seul")) && !sc.hasNext());
+				System.out.println(reponse.equals("seul"));
+			} while (!reponse.equals("joueur") && !reponse.equals("seul"));
+			 
+			System.out.print("Saisissez votre pseudo  : ");
+			String pseudo = sc.next();
+			j1 = FabriqueJoueur.creer(pseudo);
 			
 			switch (reponse) {
 			case "joueur":
-				System.out.print("Saisissez votre pseudo  : ");
-				String pseudo = sc.next();
-				j1 = FabriqueJoueur.creer(reponse, pseudo);
 				System.out.print("2eme joueur saisissez votre pseudo : ");
 				pseudo = sc.next();
-				j2 = FabriqueJoueur.creer(reponse, pseudo);
+				j2 = FabriqueJoueur.creer(pseudo);
 				break;
 			case "seul":
-				System.out.println("Saisissez votre pseudo :");
-				pseudo = sc.next();
-				j1 = FabriqueJoueur.creer("humain", pseudo);
-				j2 = FabriqueJoueur.creer("ordinateur");
-				System.err.println("Vous jouer contre " + j2.getNom());
+				j2 = FabriqueJoueur.creer();
+				System.out.println("Vous jouer contre " + j2.getNom());
 			}
 			
 			int taille;
@@ -50,15 +48,13 @@ public class IHM {
 				taille = sc.nextInt();
 			}while((3 > taille || 26 < taille) && !sc.hasNextInt());
 			
-			plateau = FabriquePlateau.creer(taille,null);
+			plateau = FabriquePlateau.creer(taille);
 			
 			System.out.println("Vos pions sont les croix et les ronds pour l'autre joueur.");
 			System.out.println(plateau);
 			
 			do{
-				
-				System.out.println(j1.getNom() + " , Saissisez votre mouvement sur le plateau ");
-				String coord = IHM.saisirCoord(sc, taille);
+				String coord = IHM.saisirCoord(j1.getNom(), sc, taille);
 				j1.jouer(coord, plateau);
 				
 				System.out.println("Vous avez place votre pion a la position " + coord);
@@ -66,20 +62,16 @@ public class IHM {
 				
 				if(plateau.aGagne(Pion.J1)) break;
 				
-				if (j2.getClass().getName().equals("joueur.JoueurHumain")) {
-					System.out.println(j2.getNom() + " , Saissisez votre mouvement sur le plateau");
-					coord = IHM.saisirCoord(sc, taille);;
-					j2.jouer(coord, plateau);
-				}
-				else j2.jouer(null, plateau);
+				coord = j2.needs_input()? IHM.saisirCoord(j2.getNom(), sc, taille) : null;
+				j2.jouer(coord, plateau);
 				
 				System.out.println(plateau);
 				
 			}while(!plateau.aGagne(Pion.J1) || !plateau.aGagne(Pion.J2));
 			
 			
-			if(plateau.aGagne(Pion.J1)) System.out.println("BRAVO" + j1.getNom() + ", vous avez gagné !");
-			else System.out.println("BRAVO" + j2.getNom() + ", vous avez gagné !");
+			String nom_gagant = (plateau.aGagne(Pion.J1))?j1.getNom(): j2.getNom();
+			System.out.println("BRAVO" + nom_gagant + ", vous avez gagné !");
 			
 			do{
 				System.out.print("Vous voulez rejouer ? O(oui)/N(non) : ");
@@ -89,19 +81,45 @@ public class IHM {
 			if (reponse.equals("N")) rejouer = false;
 		}
 		
-		sc.close();
+		sc.close();		
+	}
+	
+	private interface validator<T> {
+	    public boolean is_valid(T input, Scanner sc);
+	}
+	
+	private interface inputGetter<T> {
+		public T getNext(Scanner sc);
+	}
+	
+	private static <Input_type> Input_type get_input(String message, Scanner sc, inputGetter<Input_type> g, validator<Input_type> v) {
+		Input_type in;
+		do {
+			System.out.println(message);
+			in = g.getNext(sc);
+		} while (!v.is_valid(in, sc));
 		
+		return in;
 		
+		/*		
+		String col_msg = "Saissisez la colonne entre A et " + (char)(taille -1 + 'A') + " : ";
+		validator<String> col_validator =  (col, scanner) -> {return l.contains(col) && !scanner.hasNext();};
+		String col = get_input(col_msg, sc, (scanner) -> {return scanner.next();}, col_validator);
+		*/
 	}
 
-	private static String saisirCoord(Scanner sc, int taille) {
+	private static String saisirCoord(String player_name, Scanner sc, int taille) {
+		System.out.println(player_name + " , Saissisez votre mouvement sur le plateau");
+		
 		List<String> l = new ArrayList<>();
 		for (int i = 0; i < taille; i++) {
 			l.add((char)(i + 'A')+"");
 		}
+		
+		String col_msg = "Saissisez la colonne entre A et " + (char)(taille -1 + 'A') + " : ";
 		String col;
 		do{
-			System.out.print("Saissisez la colonne entre A et " + (char)(taille -1 + 'A') + " : ");
+			System.out.print(col_msg);
 			col = sc.next();
 		}while (!l.contains(col) && !sc.hasNext());
 		

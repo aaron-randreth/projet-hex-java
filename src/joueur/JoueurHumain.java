@@ -20,5 +20,9 @@ public class JoueurHumain implements IJoueur {
 		p.jouer(coord);
 	}
 
+	@Override
+	public boolean needs_input() {
+		return true;
+	}
 
 }

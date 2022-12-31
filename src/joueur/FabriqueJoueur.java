@@ -1,18 +1,15 @@
 package joueur;
 
 import ihm.IJoueur;
+import ihm.IFabriqueJoueur;
 
-public class FabriqueJoueur {
-	public static IJoueur creer(String type, String... nom) {
-		switch(type) {
-		case "humain":
-			return new JoueurHumain(nom[0]);
-		case "ordinateur":
-			return new JoueurOrdi();
-		default:
-			throw new IllegalArgumentException(
-					"Type inconnu " + type);
-		}
+public class FabriqueJoueur implements IFabriqueJoueur {
+	public static IJoueur creer(String nom) {
+		return new JoueurHumain(nom);
+	}
+	
+	public static IJoueur creer() {
+		return new JoueurOrdi();
 	}
 
 }
