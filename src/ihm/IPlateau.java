@@ -1,7 +1,5 @@
 package ihm;
 
-import hex.Pion;
-
 public interface IPlateau {
 
 	void jouer(String coord);

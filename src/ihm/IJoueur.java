@@ -5,4 +5,6 @@ public interface IJoueur {
 	String getNom();
 	
 	void jouer(String coord,IPlateau p);
+	
+	boolean needs_input();
 }

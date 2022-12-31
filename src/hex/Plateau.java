@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ihm.IPlateau;
+import ihm.Pion;
 
 public class Plateau implements IPlateau {
 	private final static int TAILLE_MAX = 26;
@@ -177,7 +178,6 @@ public class Plateau implements IPlateau {
 				continue;
 			
 			visitees.add(voisin);
-			System.out.println(visitees);
 			has_won = has_won || visit(voisin, visitees, pions_fin, p);
 		}
 		return has_won;
@@ -197,6 +197,7 @@ public class Plateau implements IPlateau {
 				Coordonne bas = new Coordonne(i,taille()-1);
 				if(pi == getCase(bas))
 					pbas.add(bas);
+				
 			}
 			
 			if(phaut.size() == 0 || pbas.size() == 0)

@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import hex.Pion;
 import hex.Plateau;
 import ihm.IPlateau;
+import ihm.Pion;
 
 class PlateauTest {
 	private String pos1 = ".X..XOXXOO.OX..."; 

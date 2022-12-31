@@ -1,9 +1,8 @@
 package joueur;
 
 import ihm.IJoueur;
-import ihm.IFabriqueJoueur;
 
-public class FabriqueJoueur implements IFabriqueJoueur {
+public class FabriqueJoueur {
 	public static IJoueur creer(String nom) {
 		return new JoueurHumain(nom);
 	}

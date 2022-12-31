@@ -1,4 +1,4 @@
-package hex;
+package ihm;
 
 public enum Pion {
 	J1('X'), J2('O'), Vide('.');
