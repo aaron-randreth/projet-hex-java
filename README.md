@@ -1,4 +1,4 @@
-# projet hex
+# projet hex Groupe 203
 Membres :
 Yousrah Soule, Aaron Randreth, Llo, Adrien Deu
 Groupe : 203
