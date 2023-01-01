@@ -24,8 +24,8 @@ public class JoueurTest {
 	
 		assertEquals(h0.getNom(),"Bob");
 		assertEquals(h1.getNom(),"Alice");
-		assertEquals(r0.getNom(),"r0");
-		assertEquals(r1.getNom(),"r1");
+		assertEquals(r0.getNom(),"R0");
+		assertEquals(r1.getNom(),"R1");
 
 		r0.jouer("",p0);
 		r1.jouer("", p0);

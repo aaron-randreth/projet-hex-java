@@ -7,12 +7,12 @@ public class JoueurHumain implements IJoueur {
 	private String nom;
 	
 	public JoueurHumain(String n) {
-		this.nom=n;
+		this.nom=n.substring(0,1).toUpperCase() + n.substring(1).toLowerCase();
 	}
 
 	@Override
 	public String getNom() {
-		return this.nom.toUpperCase();
+		return this.nom;
 	}
 
 	@Override

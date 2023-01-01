@@ -23,7 +23,7 @@ public class IHM {
 			 do{
 				System.out.print("Saisissez 'joueur' ou 'seul' : ");
 				reponse = sc.next();
-			} while (!reponse.equals("joueur") && !reponse.equals("seul"));
+			} while (!reponse.equals("joueur") && !reponse.equals("seul") && !sc.hasNext());
 			 
 			System.out.print("Saisissez votre pseudo  : ");
 			String pseudo = sc.next();
@@ -47,9 +47,9 @@ public class IHM {
 			
 			int taille;
 			do{
-				System.out.print("Saisissez une taille pour le plateau entre 3 et 26 inclus :");
+				System.out.print("Saisissez une taille pour le plateau entre 3 et 26 inclus : ");
 				taille = sc.nextInt();
-			}while(taille < 3 || 26 < taille);
+			}while((taille < 3 || 26 < taille) && !sc.hasNextInt());
 			
 			plateau = FabriquePlateau.creer(taille);
 			
@@ -58,7 +58,7 @@ public class IHM {
 			
 			do{
 				String coord = IHM.saisirCoord(j1.getNom(), sc, taille);
-				j1.jouer(coord, plateau);
+				IHM.jouer(coord, j1, plateau, sc, taille);
 				
 				System.out.println("Vous avez place votre pion a la position " + coord);
 				System.out.println(plateau);
@@ -66,15 +66,20 @@ public class IHM {
 				if(plateau.aGagne(Pion.J1)) break;
 				
 				coord = j2.needs_input()? IHM.saisirCoord(j2.getNom(), sc, taille) : null;
-				j2.jouer(coord, plateau);
+				IHM.jouer(coord, j2, plateau, sc, taille);
 				
 				System.out.println(plateau);
 				
-			}while(!plateau.aGagne(Pion.J1) && !plateau.aGagne(Pion.J2));
+				if(!plateau.peutJouer()) break;
+				
+			}while(!plateau.aGagne(Pion.J1) || !plateau.aGagne(Pion.J2));
 			
+			String nom_gagant = (plateau.aGagne(Pion.J1))? j1.getNom(): (plateau.aGagne(Pion.J2)) ? j2.getNom() : "";
 			
-			String nom_gagant = (plateau.aGagne(Pion.J1))?j1.getNom(): j2.getNom();
-			System.out.println("BRAVO" + nom_gagant + ", vous avez gagné !");
+			if(nom_gagant != "")
+				System.out.println("BRAVO " + nom_gagant + ", vous avez gagne !");
+			else
+				System.out.println("Partie nul, aucun joueur a gagner");
 			
 			do{
 				System.out.print("Vous voulez rejouer ? O(oui)/N(non) : ");
@@ -133,4 +138,14 @@ public class IHM {
 		
 		return coord;
 	}
+	
+	private static void jouer(String coord, IJoueur j, IPlateau p, Scanner sc, int taille) {
+		if(coord != null)
+			while(!p.estPlacable(coord)) {
+				System.out.println("Vous devez donnez une position libre");
+				coord = IHM.saisirCoord(j.getNom(), sc, taille);
+			}
+		j.jouer(coord, p);
+	}
+	
 }

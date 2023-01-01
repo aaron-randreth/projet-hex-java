@@ -1,6 +1,7 @@
 package hex;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import ihm.IPlateau;
@@ -193,11 +194,11 @@ public class Plateau implements IPlateau {
 		List<Coordonne> visitees = new ArrayList<>();
 		
 		for(int i=0 ; i < taille(); i++) {
-			Coordonne depart = (pi == Pion.J1)?new Coordonne(i,0): new Coordonne(0, i);
+			Coordonne depart = (pi == Pion.J1)? new Coordonne(i,0): new Coordonne(0, i);
 			if(pi == getCase(depart)) 
 				pions_depart_ocupe.add(depart);
 			
-			Coordonne arrive = (pi == Pion.J1)?new Coordonne(i,taille()-1):new Coordonne(taille()-1,i);
+			Coordonne arrive = (pi == Pion.J1)? new Coordonne(i,taille()-1):new Coordonne(taille()-1,i);
 			if(pi == getCase(arrive))
 				pions_arrive_ocupe.add(arrive);
 			
