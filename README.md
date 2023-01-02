@@ -28,7 +28,7 @@
 Dans ce projet nous avons implémenté le jeu Hex, avec un interface sur
 la ligne de commande, et deux modes de jeux: \"joueur\" où deux joueurs
 s\'affrontent, et \"seul\" où un seul joueur fait face à un ordinateur.
-Cette ordinateur n\'a ici pas d\'algorithme complexe, mais comme nous le
+Cet ordinateur n\'a ici pas d\'algorithme complexe, mais comme nous le
 montrerons dans ce rapport, il est très simple grâce à notre
 architecture de créer un robot plus complexe.
 
