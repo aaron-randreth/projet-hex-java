@@ -1,19 +1,22 @@
-# projet hex Groupe 203
-Membres :
-Yousrah Soule, Aaron Randreth, Ilo Rabiarivelo, Adrien Deu
-Groupe : 203
 
-Contenu du projet (dossier src ) :
+# Projet hex du Groupe 203
 
-3 paquetage :
-1 - hex : 2 classes ( Plateau et FabriquePlateau )  et un enum ( Pion )
-2 - joueur : 3 classes ( JoueurHuimain, JoueurOrdi, FabriqueJoueur )
-3 - ihm : 2 interface ( IJoueur, Iplateau ) et une classe contenant la methode main ( IHM )
+**Membres** : Yousrah SOULE, Aaron RANDRETH, Ilo RABIARIVELO, Adrien DEU
+**Groupe** : 203
 
-Bilan du projet :
+## Résumé de notre implémentation 
 
-Dans l'ensemble tout marche dans le projet, on a reussi à accomplir les objectifs attendu. 
-Ce qu'on pourrait améliorer dans le projet serait l'intelligence de l'ordinateur. On pourrait créer des algorithmes plus complexes pour que les coups de l'ordinateur soit plus intelligents. 
+Dans ce projet nous avons implémenté le jeu Hex 
+
+## Notre structure de projet, le diagramme UML 
+
+Lien vers le diagramme UML :
+
+www.plantuml.com/plantuml/png/TL3RQW8n57m_Np7GXqB1q4eVHQINeWMfq2yuQggfINQRtO2bzTzBDcxJH2iIo5mcCpjfMdQjDvekyLfhrKBPji8jQjx8XiA9uNv8pKxPcXsRZfYpsoYBc-i2VzotqbdMzvMk73QEFml1NUNMqaLwgNcr8x9iP5FpIa9j3IuUkX--2A69T6-1cIqqjv9z3ZvNNdf7m4fpqs0sdHF22I76oPAWtf2GhToBXQfi0JtnqgaFBqyZthk4Ny4na0v_PeI4R4RVBwK1qdg3uyle6LmD1kE89jTf5uGF9Vfz67qBaMKNZj0xuq55uJWgTGPbhwUX2O_tgJUiR8c-kBKY8DDW9CIPi6GuBuXBupKEpKB_KwGIuN-WYRHhR_GF
+
+## Ce qui fonctionne, et ce que l'on pourrais rajouter 
+
+## Synthèse de nos tests unitaires 
 
 Les Tests :
 
@@ -21,9 +24,11 @@ Dans paquetage joueur, dans les classes JoueurOrdi et JoueurHumain toutes leurs 
 Dans le paquetage hex, l'enum Pion a été testé dans PionTest et les classe Plateau et FabriquePlateau ont été testé dans PlateauTest.
 
 
+## Bilan du projet 
 
-Lien vers le diagramme UML :
+### Des difficutlés pour se débaraser de dépendances 
 
-www.plantuml.com/plantuml/png/TL3RQW8n57m_Np7GXqB1q4eVHQINeWMfq2yuQggfINQRtO2bzTzBDcxJH2iIo5mcCpjfMdQjDvekyLfhrKBPji8jQjx8XiA9uNv8pKxPcXsRZfYpsoYBc-i2VzotqbdMzvMk73QEFml1NUNMqaLwgNcr8x9iP5FpIa9j3IuUkX--2A69T6-1cIqqjv9z3ZvNNdf7m4fpqs0sdHF22I76oPAWtf2GhToBXQfi0JtnqgaFBqyZthk4Ny4na0v_PeI4R4RVBwK1qdg3uyle6LmD1kE89jTf5uGF9Vfz67qBaMKNZj0xuq55uJWgTGPbhwUX2O_tgJUiR8c-kBKY8DDW9CIPi6GuBuXBupKEpKB_KwGIuN-WYRHhR_GF
+Durant la création du jeu, nous avons essayé de suis 
 
-
+Les fonctionnalités attendues du jeu fonctionnent sans problème 
+Ce qu'on pourrait améliorer dans le projet serait l'intelligence de l'ordinateur. On pourrait créer des algorithmes plus complexes pour que les coups de l'ordinateur soit plus intelligents. 
