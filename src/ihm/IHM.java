@@ -8,13 +8,14 @@ package ihm;
  */
 
 import java.util.Scanner;
+import joueur.FabriqueJoueur;
 import hex.FabriquePlateau;
 import jeu.IFabriqueJoueur;
 import jeu.IFabriquePlateau;
 import jeu.IJoueur;
 import jeu.IPlateau;
 import jeu.Pion;
-import joueur.FabriqueJoueur;
+
 
 public class IHM {
 	private static IFabriquePlateau fplateau = new FabriquePlateau();
