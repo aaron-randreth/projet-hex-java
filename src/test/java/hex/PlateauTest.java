@@ -23,8 +23,6 @@ class PlateauTest {
 			"3   O O . O\n" + 
 			"4    X . . .\n";
 
-
-	
 	void test() {
 		final int taille = 4;
 		IPlateau p = new Plateau(taille);
@@ -82,20 +80,20 @@ class PlateauTest {
 	public void testWins() {
 		IPlateau p1 = new Plateau(4, vert_win1_in);
 		assertEquals(p1.toString(), vert_win1_tostr);
-		System.out.println("P1: ");
-		System.out.println(p1);
+		//System.out.println("P1: ");
+		//System.out.println(p1);
 		assertFalse(p1.aGagne(Pion.J1));
 		assertTrue(p1.aGagne(Pion.J2));
 		
 		IPlateau p2 = new Plateau(4, pos1);
-		System.out.println("P2: ");
-		System.out.println(p2);
+		//System.out.println("P2: ");
+		//System.out.println(p2);
 		assertFalse(p2.aGagne(Pion.J1));
 		assertFalse(p2.aGagne(Pion.J2));
 		
 		IPlateau p3 = new Plateau(4, vert_win2_in);
-		System.out.println("P3: ");
-		System.out.println(p3);
+		//System.out.println("P3: ");
+		//System.out.println(p3);
 		assertFalse(p3.aGagne(Pion.J1));
 		assert(p3.aGagne(Pion.J2));
 

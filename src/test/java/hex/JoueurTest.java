@@ -1,4 +1,4 @@
-package joueur;
+package test.java.hex;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,6 +8,8 @@ import hex.Plateau;
 import ihm.IJoueur;
 import ihm.IPlateau;
 import ihm.Pion;
+import joueur.JoueurHumain;
+import joueur.JoueurOrdi;
 
 
 
