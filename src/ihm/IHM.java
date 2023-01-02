@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import hex.FabriquePlateau;
-import joueur.FabriqueJoueur;
-
 public class IHM {
 	
 	public static void main(String[] args){
@@ -27,20 +24,20 @@ public class IHM {
 			 
 			System.out.print("Saisissez votre pseudo  : ");
 			String pseudo = sc.next();
-			j1 = FabriqueJoueur.creer(pseudo);
+			j1 = IFabriqueJoueur.creer(pseudo);
 			
 			switch (reponse) {
 			case "joueur":
 				System.out.print("2eme joueur saisissez votre pseudo : ");
 				pseudo = sc.next();
-				j2 = FabriqueJoueur.creer(pseudo);
+				j2 = IFabriqueJoueur.creer(pseudo);
 				break;
 			case "seul":
-				j2 = FabriqueJoueur.creer();
+				j2 = IFabriqueJoueur.creer();
 				System.out.println("Vous jouer contre " + j2.getNom());
 				break;
 			default:
-				j2 = FabriqueJoueur.creer();
+				j2 = IFabriqueJoueur.creer();
 				System.out.println("Vous jouer contre " + j2.getNom());
 				break;
 			}
@@ -51,7 +48,7 @@ public class IHM {
 				taille = sc.nextInt();
 			}while((taille < 3 || 26 < taille) && !sc.hasNextInt());
 			
-			plateau = FabriquePlateau.creer(taille);
+			plateau = IFabriquePlateau.creer(taille);
 			
 			System.out.println("Vos pions sont les croix et les ronds pour l'autre joueur.");
 			System.out.println(plateau);
@@ -74,12 +71,13 @@ public class IHM {
 				
 			}while(!plateau.aGagne(Pion.J1) || !plateau.aGagne(Pion.J2));
 			
-			String nom_gagant = (plateau.aGagne(Pion.J1))? j1.getNom(): (plateau.aGagne(Pion.J2)) ? j2.getNom() : "";
-			
-			if(nom_gagant != "")
+			if (!plateau.aGagne(Pion.J1) && !plateau.aGagne(Pion.J2))
+				System.out.println("Partie nul, aucun joueur n'a gagner");
+			else {
+				String nom_gagant = (plateau.aGagne(Pion.J1))? j1.getNom():  j2.getNom();
 				System.out.println("BRAVO " + nom_gagant + ", vous avez gagne !");
-			else
-				System.out.println("Partie nul, aucun joueur a gagner");
+			}
+				
 			
 			do{
 				System.out.print("Vous voulez rejouer ? O(oui)/N(non) : ");
@@ -92,29 +90,23 @@ public class IHM {
 		sc.close();		
 	}
 	
-	private interface validator<T> {
-	    public boolean is_valid(T input, Scanner sc);
+	public static boolean isInteger(String s) {
+	    return isInteger(s,10);
+	}
+
+	public static boolean isInteger(String s, int radix) {
+	    if(s.isEmpty()) return false;
+	    for(int i = 0; i < s.length(); i++) {
+	        if(i == 0 && s.charAt(i) == '-') {
+	            if(s.length() == 1) return false;
+	            else continue;
+	        }
+	        if(Character.digit(s.charAt(i),radix) < 0) return false;
+	    }
+	    return true;
 	}
 	
-	private interface inputGetter<T> {
-		public T getNext(Scanner sc);
-	}
-	
-	private static <Input_type> Input_type get_input(String message, Scanner sc, inputGetter<Input_type> g, validator<Input_type> v) {
-		Input_type in;
-		do {
-			System.out.println(message);
-			in = g.getNext(sc);
-		} while (!v.is_valid(in, sc));
-		
-		return in;
-		
-		/*		
-		String col_msg = "Saissisez la colonne entre A et " + (char)(taille -1 + 'A') + " : ";
-		validator<String> col_validator =  (col, scanner) -> {return l.contains(col) && !scanner.hasNext();};
-		String col = get_input(col_msg, sc, (scanner) -> {return scanner.next();}, col_validator);
-		*/
-	}
+
 
 	private static String saisirCoord(String player_name, Scanner sc, int taille) {
 		System.out.println(player_name + " , Saissisez votre mouvement sur le plateau");
@@ -129,12 +121,16 @@ public class IHM {
 			System.out.print(msg);
 			coord = sc.next();
 			
+			if (coord.length() < 2 || !isInteger(coord.substring(1))) {
+				System.out.println("Veillez saisir une coordonnée valideeee");
+				continue;
+			}
+			
 			col = coord.charAt(0);
 			li =  Integer.parseInt(coord.substring(1));
-		} while (!(2 <= coord.length() && coord.length() <= 26) &&
-				!('A' < col && col <= 'A' + taille) &&
+		} while (!(2 <= coord.length() && coord.length() <= 26) ||
+				!('A' < col && col <= 'A' + taille) ||
 				!(1 <= li && li <= taille ));
-
 		
 		return coord;
 	}
