@@ -61,13 +61,13 @@ class PlateauTest {
 		assertEquals(display_rep, p.toString());
 	}
 	
-	private String vert_win1_in = ".X.XOOXX.OOOX...";
+	private String vert_win1_in = ".O.XOOXX.OXOOX..";
 	private String vert_win1_tostr =
 			" A B C D\n" + 
-			"1 . X . X\n" + 
+			"1 . O . X\n" + 
 			"2  O O X X\n" + 
-			"3   . O O O\n" + 
-			"4    X . . .\n";
+			"3   . O X O\n" + 
+			"4    O X . .\n";
 	
 	private String vert_win2_tostr =
 			" A B C D\n" + 
@@ -92,20 +92,56 @@ class PlateauTest {
 		assertFalse(p1.estPlacable("D4"));
 	}
 	
+	private String J1_win_ligne_v = 
+			" A B C D\n" + 
+			"1 . O X .\n" + 
+			"2  O O X X\n" + 
+			"3   O O X O\n" + 
+			"4    X . X .\n";
+	
+	private String J1_win_ligne_v_in =".OX.OOXXOOXOX.X."; 
+	
+	
+	private String J2_win_ligne_h = 
+			" A B C D\n" + 
+			"1 . X . .\n" + 
+			"2  X X X X\n" + 
+			"3   O O O O\n" + 
+			"4    X O . .\n";
+	
+	private String J2_win_ligne_h_in = ".X..XXXXOOOOXO..";
+
+
+	
 	@Test
 	public void testWins() {
+		//Dans le cas ou le J1 gagne
 		IPlateau p1 = new Plateau(4, vert_win1_in);
 		assertEquals(p1.toString(), vert_win1_tostr);
-		assertFalse(p1.aGagne(Pion.J1));
-		assertTrue(p1.aGagne(Pion.J2));
+		assertTrue(p1.aGagne(Pion.J1));
+		assertFalse(p1.aGagne(Pion.J2));
 		
+		//Dans le cas ou personne ne gagne 
 		IPlateau p2 = new Plateau(4, pos1);
 		assertFalse(p2.aGagne(Pion.J1));
 		assertFalse(p2.aGagne(Pion.J2));
 		
+		//Dans le cas ou le J2 gagne
 		IPlateau p3 = new Plateau(4, vert_win2_in);
 		assertFalse(p3.aGagne(Pion.J1));
-		assert(p3.aGagne(Pion.J2));
+		assertTrue(p3.aGagne(Pion.J2));
+		
+		//Dans le cas ou le J2 gagne en ligne droite
+		IPlateau p4=new Plateau(4,J2_win_ligne_h_in);
+		assertEquals(p4.toString(), J2_win_ligne_h);
+		assertFalse(p4.aGagne(Pion.J1));
+		assertTrue(p4.aGagne(Pion.J2));
+		
+		//Dans le cas ou le J1 gagne en ligne droite
+		IPlateau p5=new Plateau(4,J1_win_ligne_v_in);
+		assertEquals(p5.toString(), J1_win_ligne_v);
+		assertFalse(p5.aGagne(Pion.J2));
+		assertTrue(p5.aGagne(Pion.J1));
 
 	}
 
