@@ -1,6 +1,6 @@
 # projet hex Groupe 203
 Membres :
-Yousrah Soule, Aaron Randreth, Llo, Adrien Deu
+Yousrah Soule, Aaron Randreth, Ilo Rabiarivelo, Adrien Deu
 Groupe : 203
 
 Contenu du projet (dossier src ) :
@@ -13,11 +13,11 @@ Contenu du projet (dossier src ) :
 Bilan du projet :
 
 Dans l'ensemble tout marche dans le projet, on a reussi à accomplir les objectifs attendu. 
-Ce qui est à ameliorer ce serait d'avoir la possibilité à ce qu'on puisse faire une partie ordinateur contre ordinateur.
+Ce qu'on pourrait améliorer dans le projet serait l'intelligence de l'ordinateur. On pourrait créer des algorithmes plus complexes pour que les coups de l'ordinateur soit plus intelligents. 
 
 Les Tests :
 
-Dans paquetage joueur, dans les classes JoueurOrdi et JoueurHumain toutes leurs methodes ont été testés dans la clsse JoueurTest.
+Dans paquetage joueur, dans les classes JoueurOrdi et JoueurHumain toutes leurs methodes ont été testés dans la classe JoueurTest.
 Dans le paquetage hex, l'enum Pion a été testé dans PionTest et les classe Plateau et FabriquePlateau ont été testé dans PlateauTest.
 
 
