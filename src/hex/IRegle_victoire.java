@@ -1,7 +1,7 @@
 package hex;
 
-import ihm.IPlateau;
-import ihm.Pion;
+import jeu.IPlateau;
+import jeu.Pion;
 
 public interface IRegle_victoire {
 

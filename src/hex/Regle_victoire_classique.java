@@ -3,8 +3,8 @@ package hex;
 import java.util.ArrayList;
 import java.util.List;
 
-import ihm.IPlateau;
-import ihm.Pion;
+import jeu.IPlateau;
+import jeu.Pion;
 
 class Regle_victoire_classique implements IRegle_victoire {
 	
