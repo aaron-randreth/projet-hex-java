@@ -73,7 +73,7 @@ public class Plateau implements IPlateau {
 	
 	@Override
 	public boolean peutJouer() {
-		return getNb(Pion.Vide) == 0;
+		return getNb(Pion.Vide) != 0;
 	}
 
 	public static int getTaille(String pos) {
