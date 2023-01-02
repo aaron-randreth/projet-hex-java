@@ -52,8 +52,9 @@ public class Plateau implements IPlateau {
 		joueur = (joueur +1) % NB_JOUEURS;
 	}
 	
+	@Override
 	public boolean estPlacable(String coord) {
-		return (estValide(coord) && Pion.Vide == getCase(coord)); 
+		return (estValide(coord) && Pion.Vide == getCase(coord) && peutJouer()); 
 	}
 	
 	@Override
