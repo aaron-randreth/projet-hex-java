@@ -21,7 +21,7 @@ public class IHM {
 			 do{
 				System.out.print("Saisissez 'joueur' ou 'seul' : ");
 				reponse = sc.next();
-			} while (!reponse.equals("joueur") && !reponse.equals("seul") && !sc.hasNext());
+			} while (!reponse.equals("joueur") && !reponse.equals("seul"));
 			 
 			System.out.print("Saisissez votre pseudo  : ");
 			String pseudo = sc.next();
@@ -47,15 +47,16 @@ public class IHM {
 			do{
 				System.out.print("Saisissez une taille pour le plateau entre 3 et 26 inclus : ");
 				taille = sc.nextInt();
-			}while((taille < 3 || 26 < taille) && !sc.hasNextInt());
+			}while((taille < 3 || 26 < taille));
 			
 			plateau = fplateau.creer(taille);
 			
 			System.out.println("Vos pions sont les croix et les ronds pour l'autre joueur.");
 			System.out.println(plateau);
 			
+			String coord;
 			do{
-				String coord = IHM.saisirCoord(j1.getNom(), sc, taille);
+				coord = j1.needs_input()? IHM.saisirCoord(j1.getNom(), sc, taille) : null;
 				IHM.jouer(coord, j1, plateau, sc, taille);
 				
 				System.out.println("Vous avez place votre pion a la position " + coord);
