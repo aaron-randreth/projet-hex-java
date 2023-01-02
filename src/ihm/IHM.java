@@ -55,10 +55,18 @@ public class IHM {
 				break;
 			}
 			
-			int taille;
+			int taille = -1;
 			do{
 				System.out.print("Saisissez une taille pour le plateau entre 3 et 26 inclus : ");
-				taille = sc.nextInt();
+				String staille = sc.next();
+				
+				if (!isInteger(staille)) {
+					System.out.println("Taille non valide");
+					continue;
+				}
+				
+				taille = Integer.parseInt(staille);
+				
 			}while((taille < 3 || 26 < taille));
 			
 			plateau = fplateau.creer(taille);
