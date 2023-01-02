@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import ihm.Pion;
+import jeu.Pion;
 
 /**
  * @author RABIARIVELO Ilo Andrianaly

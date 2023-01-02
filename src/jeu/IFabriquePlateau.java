@@ -1,4 +1,5 @@
-package ihm;
+package jeu;
+
 /**
  * @author RABIARIVELO Ilo Andrianaly
  * @author RANDRETH Aaron 

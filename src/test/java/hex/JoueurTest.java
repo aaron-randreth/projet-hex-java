@@ -10,9 +10,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import hex.Plateau;
-import ihm.IJoueur;
-import ihm.IPlateau;
-import ihm.Pion;
+import jeu.IJoueur;
+import jeu.IPlateau;
+import jeu.Pion;
 import joueur.JoueurHumain;
 import joueur.JoueurOrdi;
 

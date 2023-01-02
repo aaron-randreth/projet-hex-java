@@ -9,6 +9,11 @@ package ihm;
 
 import java.util.Scanner;
 import hex.FabriquePlateau;
+import jeu.IFabriqueJoueur;
+import jeu.IFabriquePlateau;
+import jeu.IJoueur;
+import jeu.IPlateau;
+import jeu.Pion;
 import joueur.FabriqueJoueur;
 
 public class IHM {
@@ -78,7 +83,7 @@ public class IHM {
 				
 				if(!plateau.peutJouer()) break;
 				
-			}while(!plateau.aGagne(Pion.J1) || !plateau.aGagne(Pion.J2));
+			}while(!plateau.aGagne(Pion.J1) && !plateau.aGagne(Pion.J2));
 			
 			if (!plateau.aGagne(Pion.J1) && !plateau.aGagne(Pion.J2))
 				System.out.println("Partie nul, aucun joueur n'a gagner");

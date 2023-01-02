@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import hex.Plateau;
-import ihm.IPlateau;
-import ihm.Pion;
+import jeu.IPlateau;
+import jeu.Pion;
 /**
  * @author RABIARIVELO Ilo Andrianaly
  * @author RANDRETH Aaron 
@@ -148,7 +148,8 @@ class PlateauTest {
 		assertEquals(p5.toString(), J1_win_ligne_v);
 		assertFalse(p5.aGagne(Pion.J2));
 		assertTrue(p5.aGagne(Pion.J1));
-
+		
+		
 	}
 
 }

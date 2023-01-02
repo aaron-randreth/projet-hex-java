@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-import ihm.IPlateau;
-import ihm.Pion;
+import jeu.IPlateau;
+import jeu.Pion;
 
 public class Plateau implements IPlateau {
 	private final static int TAILLE_MAX = 26;

@@ -6,8 +6,8 @@ package hex;
  * @author Adrien DEU
  */
 
-import ihm.IFabriquePlateau;
-import ihm.IPlateau;
+import jeu.IFabriquePlateau;
+import jeu.IPlateau;
 
 
 public class FabriquePlateau implements IFabriquePlateau {
