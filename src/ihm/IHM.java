@@ -1,11 +1,12 @@
 package ihm;
 
-import java.util.ArrayList;
-
-import java.util.List;
 import java.util.Scanner;
+import hex.FabriquePlateau;
+import joueur.FabriqueJoueur;
 
 public class IHM {
+	private static IFabriquePlateau fplateau = new FabriquePlateau();
+	private static IFabriqueJoueur fjoueur = new FabriqueJoueur();
 	
 	public static void main(String[] args){
 		boolean rejouer = true;
@@ -24,20 +25,20 @@ public class IHM {
 			 
 			System.out.print("Saisissez votre pseudo  : ");
 			String pseudo = sc.next();
-			j1 = IFabriqueJoueur.creer(pseudo);
+			j1 = fjoueur.creer(pseudo);
 			
 			switch (reponse) {
 			case "joueur":
 				System.out.print("2eme joueur saisissez votre pseudo : ");
 				pseudo = sc.next();
-				j2 = IFabriqueJoueur.creer(pseudo);
+				j2 = fjoueur.creer(pseudo);
 				break;
 			case "seul":
-				j2 = IFabriqueJoueur.creer();
+				j2 = fjoueur.creer();
 				System.out.println("Vous jouer contre " + j2.getNom());
 				break;
 			default:
-				j2 = IFabriqueJoueur.creer();
+				j2 = fjoueur.creer();
 				System.out.println("Vous jouer contre " + j2.getNom());
 				break;
 			}
@@ -48,7 +49,7 @@ public class IHM {
 				taille = sc.nextInt();
 			}while((taille < 3 || 26 < taille) && !sc.hasNextInt());
 			
-			plateau = IFabriquePlateau.creer(taille);
+			plateau = fplateau.creer(taille);
 			
 			System.out.println("Vos pions sont les croix et les ronds pour l'autre joueur.");
 			System.out.println(plateau);
@@ -116,21 +117,24 @@ public class IHM {
 		
 		char col = '@';
 		int li = -1;
+		boolean taille_valide = false, colonne_valide = false, ligne_valide = false;
 		
 		do{
 			System.out.print(msg);
 			coord = sc.next();
 			
 			if (coord.length() < 2 || !isInteger(coord.substring(1))) {
-				System.out.println("Veillez saisir une coordonnée valideeee");
+				System.out.println("Veillez saisir une coordonnée valide");
 				continue;
 			}
 			
 			col = coord.charAt(0);
 			li =  Integer.parseInt(coord.substring(1));
-		} while (!(2 <= coord.length() && coord.length() <= 26) ||
-				!('A' < col && col <= 'A' + taille) ||
-				!(1 <= li && li <= taille ));
+			
+			taille_valide = 2 <= coord.length() && coord.length() <= 26;
+			colonne_valide = 'A' <= col && col <= 'A' + taille;
+			ligne_valide = 1 <= li && li <= taille ;
+		} while (!(taille_valide && colonne_valide && ligne_valide));
 		
 		return coord;
 	}
