@@ -1,5 +1,10 @@
 package hex;
-
+/**
+ * @author RABIARIVELO Ilo Andrianaly
+ * @author RANDRETH Aaron 
+ * @author Yousrah SOULE
+ * @author Adrien DEU
+ */
 import java.util.ArrayList;
 
 import java.util.List;

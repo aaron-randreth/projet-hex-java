@@ -6,6 +6,13 @@ import org.junit.jupiter.api.Test;
 
 import ihm.Pion;
 
+/**
+ * @author RABIARIVELO Ilo Andrianaly
+ * @author RANDRETH Aaron 
+ * @author Yousrah SOULE
+ * @author Adrien DEU
+ */
+
 class PionTest {
 
 	@Test

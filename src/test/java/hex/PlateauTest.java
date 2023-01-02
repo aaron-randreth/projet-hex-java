@@ -7,6 +7,12 @@ import org.junit.jupiter.api.Test;
 import hex.Plateau;
 import ihm.IPlateau;
 import ihm.Pion;
+/**
+ * @author RABIARIVELO Ilo Andrianaly
+ * @author RANDRETH Aaron 
+ * @author Yousrah SOULE
+ * @author Adrien DEU
+ */
 
 class PlateauTest {
 	private String pos1 = ".X..XOXXOO.OX..."; 

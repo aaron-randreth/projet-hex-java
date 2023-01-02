@@ -1,5 +1,10 @@
 package test.java.hex;
-
+/**
+ * @author RABIARIVELO Ilo Andrianaly
+ * @author RANDRETH Aaron 
+ * @author Yousrah SOULE
+ * @author Adrien DEU
+ */
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -10,8 +15,6 @@ import ihm.IPlateau;
 import ihm.Pion;
 import joueur.JoueurHumain;
 import joueur.JoueurOrdi;
-
-
 
 public class JoueurTest {
 	

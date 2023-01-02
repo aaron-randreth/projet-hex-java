@@ -1,5 +1,12 @@
 package ihm;
 
+/**
+ * @author RABIARIVELO Ilo Andrianaly
+ * @author RANDRETH Aaron 
+ * @author Yousrah SOULE
+ * @author Adrien DEU
+ */
+
 import java.util.Scanner;
 import hex.FabriquePlateau;
 import joueur.FabriqueJoueur;
