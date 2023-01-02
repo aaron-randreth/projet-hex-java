@@ -5,9 +5,6 @@ package hex;
  * @author Yousrah SOULE
  * @author Adrien DEU
  */
-import java.util.ArrayList;
-
-import java.util.List;
 
 import ihm.IPlateau;
 import ihm.Pion;
@@ -23,6 +20,7 @@ public class Plateau implements IPlateau {
 	
 	private Pion[][] t;
 	private int joueur = 0; // prochain � jouer
+	private IRegle_victoire regle_victoire = new Regle_victoire_classique();
 	
 	public Plateau(int taille) {
 		assert taille > 0 && taille <= TAILLE_MAX;
@@ -102,6 +100,7 @@ public class Plateau implements IPlateau {
 	@Override
 	public Pion getCase(String coord) {
 		assert estValide(coord);
+		
 		int col = getColonne(coord);
 		int lig = getLigne(coord);
 		return t[col][lig];
@@ -178,46 +177,8 @@ public class Plateau implements IPlateau {
 		  return t[c.getColonne()][c.getLigne()];
 	}
 	
-	public boolean visit(Coordonne c, List<Coordonne> visitees, List<Coordonne> pions_fin, Pion p) {
-		if (pions_fin.contains(c))
-			return true;
-		
-		boolean has_won = false;
-		
-		for (Coordonne voisin : c.voisinOccupe(this, p)) {
-			if (visitees.contains(voisin))
-				continue;
-			
-			visitees.add(voisin);
-			has_won = has_won || visit(voisin, visitees, pions_fin, p);
-		}
-		return has_won;
-	}
-	
 	public boolean aGagne(Pion pi) {
-		List<Coordonne> pions_depart_ocupe = new ArrayList<>();
-		List<Coordonne> pions_arrive_ocupe = new ArrayList<>();
-		List<Coordonne> visitees = new ArrayList<>();
-		
-		for(int i=0 ; i < taille(); i++) {
-			Coordonne depart = (pi == Pion.J1)? new Coordonne(i,0): new Coordonne(0, i);
-			if(pi == getCase(depart)) 
-				pions_depart_ocupe.add(depart);
-			
-			Coordonne arrive = (pi == Pion.J1)? new Coordonne(i,taille()-1):new Coordonne(taille()-1,i);
-			if(pi == getCase(arrive))
-				pions_arrive_ocupe.add(arrive);
-			
-		}
-		
-		if(pions_depart_ocupe.size() == 0 || pions_arrive_ocupe.size() == 0)
-			return false;
-		
-		for (Coordonne c : pions_depart_ocupe)
-			if (visit(c, visitees, pions_arrive_ocupe, pi))
-				return true;
-
-		return false;
+		return regle_victoire.aGagne(pi, this);
 	}
 
 }
@@ -239,27 +200,7 @@ class Coordonne{
 		return colonne;
 	}
 	
-	public List<Coordonne> voisinOccupe(Plateau p, Pion pion) {
-		List<Coordonne> voisins = new ArrayList<>();
-		List<Coordonne> voisins_ocupe = new ArrayList<>();
-		
-		voisins.add(coord_decale(-1, 0));
-		voisins.add(coord_decale(-1, 1));
-		voisins.add(coord_decale( 0,-1));
-		voisins.add(coord_decale( 0, 1));
-		voisins.add(coord_decale( 1,-1));
-		voisins.add(coord_decale( 1, 0));
-		
-		for(Coordonne v : voisins) {
-			if(p.estValide(v) && pion == p.getCase(v)) {
-				voisins_ocupe.add(v);
-			}
-		}
-		
-		return voisins_ocupe;
-	}
-	
-	private Coordonne coord_decale(int decalage_col, int decalage_li){
+	public Coordonne coord_decale(int decalage_col, int decalage_li){
 		  return new Coordonne(colonne+decalage_col, ligne+decalage_li);
 	}
 	
@@ -276,6 +217,9 @@ class Coordonne{
 		return c.colonne == colonne && c.ligne == ligne;
 	}
 	public String toString() {
-		return "(" + (ligne + 1) + "," + (char)(colonne + Plateau.PREMIERE_COLONNE) + ")";
+		StringBuilder sb = new StringBuilder();
+		sb.append((char)(colonne + Plateau.PREMIERE_COLONNE));
+		sb.append(ligne+1);
+		return sb.toString();
 	}
 }
