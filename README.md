@@ -23,6 +23,8 @@
 **Membres** : Yousrah SOULE, Aaron RANDRETH, Ilo RABIARIVELO, Adrien DEU
 **Groupe** : 203
 
+MZ: Note 17/20 au groupe. La note de l'exo du DST ne sera prise en compte que si elle est supérieure donc cette note ne peut pas baisser.
+
 ## Résumé de notre implémentation
 
 Dans ce projet nous avons implémenté le jeu Hex, avec un interface sur
